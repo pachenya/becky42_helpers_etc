@@ -4,12 +4,12 @@
 #
 # 2023.12.03(Su) : start.
 # 2023.12.16(Sa) : bug fixes and minor fixes.
+# 2024.02.02(Fr) : bug fixes.
 #
 
 import re
 
-tmpmn = [] # tmp monster names a.k.a. TiMPoMaN.
-tmpmnbuilded = []
+tmpmnbuilded = [] # tmp monster name builded.
 mondef = []
 mondefId = []
 
@@ -20,13 +20,6 @@ def OpenTextList(filename):
   return lns
 
 def gaishutsu_check(mname):
-  i = 0
-  for nm in tmpmn:
-    if nm == mname:
-      i = i + 1
-  return i
-
-def gaishutsu_check_2(mname):
   i = 0
   for nm in tmpmnbuilded:
     if nm == mname:
@@ -61,12 +54,11 @@ def read_lib_mondef_line(s, pfx):
     mn = pfx + s[2:].upper()
     mn = mn.rstrip('\r\n')
     
-    gcheckn = gaishutsu_check(mn)
-    tmpmn.append(mn) # for gaishutsu_check()
-
     mn = build_mon_id(mn)
 
-    gcheckn = gcheckn + gaishutsu_check_2(mn)
+    gcheckn = 0
+    gcheckn = gcheckn + gaishutsu_check(mn)
+    
     tmpmnbuilded.append(mn)
     
     if gcheckn > 0:
